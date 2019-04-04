@@ -5,7 +5,7 @@ This is a very early version of Loopring's order-based DEX protocol (version 3.0
 
 To understand several concepts introduced by the Loopring Protocol, such as order-ring, ring-matching, dual-authoring, fee-burning, please read our [whitepaper](https://loopring.org/resources/en_whitepaper.pdf) for Loopring Protocol 2.x.
 
-To understand the overall design for Loopring 3.0, including Ethereum smart contracts and zkSNARKs circuits, please refer to the [DESIGN](https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md) doc. The design of the backend relayer system is and will not be covered by this document. We welcome any feedback regarding the design and our implementation, feel free to [email us](mailto:daniel@loopringlorg) or submit pull requests.
+To understand the overall design for Loopring 3.0, including Ethereum smart contracts and zkSNARKs circuits, please refer to the [DESIGN](https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md) doc. The design of the backend relayer system is and will not be covered by this document. We welcome any feedback regarding the design and our implementation, feel free to [email us](mailto:daniel@loopring.org) or submit pull requests.
 
 ## Top Features
 
@@ -26,7 +26,7 @@ To understand the overall design for Loopring 3.0, including Ethereum smart cont
 - 100% secure for end users, even when DEX operators are evil (same as 2.0)
 - and more...
 
-## Challanges
+## Challenges
 
 - SNARKs requires trusted setups
 - Circuits not yet audited (smart contract auditing should be easy and we are very experienced)
