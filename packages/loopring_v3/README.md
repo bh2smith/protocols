@@ -13,7 +13,7 @@ To understand the overall design for Loopring 3.0, including Ethereum smart cont
 - All ERC20 tokens and Ether are supported by default
 - Multiple onchain DEX instances with isolated state and dedicated event stream (different from 2.0)
 - Onchain deposit + onchain & offchain withdrawal support
-- Support offchain order cancellation and order time-to-lve settings (inherited from 2.0)
+- Support offchain order cancellation and order time-to-live settings (inherited from 2.0)
 - Allow partial order matching (aka partial fill) and offchain order-scaling (inherited from 2.0)
 - Multiple circuit permutations for different request batch sizes
 - Use any ERC20 token or Ether as trading fee to reduce friction（inherited from 2.0)
