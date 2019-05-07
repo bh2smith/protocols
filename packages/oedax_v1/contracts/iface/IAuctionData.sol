@@ -80,6 +80,7 @@ library IAuctionData
 
         // -- The following fields WILL change on bids and asks.
 
+        bool    staked;
         uint    closeTime;
         uint    settlementTime;
 

@@ -57,9 +57,7 @@ library AuctionAsks
             accepted = amount;
         }
 
-        if (s.oedax.logParticipant(msg.sender)) {
-            s.users.push(msg.sender);
-        }
+        s.logParticipant();
 
         // Update the book keeping
         IAuctionData.Account storage a = s.accounts[msg.sender];

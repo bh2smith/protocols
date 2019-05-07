@@ -41,8 +41,6 @@ contract Auction is IAuction
     using AuctionSettlement for IAuctionData.State;
     using AuctionStatus     for IAuctionData.State;
 
-    bool staked;
-
     modifier onlyOedax {
       require (msg.sender == address(state.oedax));
       _;
@@ -118,10 +116,10 @@ contract Auction is IAuction
         external
         payable
     {
-        if (!staked) {
+        if (!state.staked) {
             require(msg.sender == owner, "not owner");
             require(msg.value > 0, "zero value");
-            staked = true;
+            state.staked = true;
         } else {
             if (msg.value == 0) {
                 settle();

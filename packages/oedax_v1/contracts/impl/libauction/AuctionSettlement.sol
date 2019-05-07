@@ -140,15 +140,16 @@ library AuctionSettlement
         )
         private
     {
+        assert(s.users.length > 0);
         uint[] memory bips = calcUserFeeRebateBips(s);
 
         uint askTakerFee = s.askAmount.mul(s.fees.takerFeeBips) / 10000;
-        uint askSettlement = s.askAmount
+        uint askTraded = s.askAmount
             .sub(askTakerFee)
             .sub(s.askAmount.mul(s.fees.protocolFeeBips) / 10000);
 
         uint bidTakerFee = s.bidAmount.mul(s.fees.takerFeeBips) / 10000;
-        uint bidSettlement = s.bidAmount
+        uint bidTraded = s.bidAmount
             .sub(bidTakerFee)
             .sub(s.bidAmount.mul(s.fees.protocolFeeBips) / 10000);
 
@@ -160,11 +161,11 @@ library AuctionSettlement
             IAuctionData.Account storage a = s.accounts[user];
 
             t.askPaid = a.askAmount;
-            t.askReceived =  askSettlement.mul(a.bidAmount) / s.bidAmount;
+            t.askReceived =  askTraded.mul(a.bidAmount) / s.bidAmount;
             t.askFeeRebate = askTakerFee.mul(bips[i]) / 10000;
 
             t.bidPaid = a.bidAmount;
-            t.bidReceived =  bidSettlement.mul(a.askAmount) / s.askAmount;
+            t.bidReceived =  bidTraded.mul(a.askAmount) / s.askAmount;
             t.bidFeeRebate = bidTakerFee.mul(bips[i]) / 10000;
 
             payUser(s.askToken, s.bidToken, user, t);
@@ -178,26 +179,26 @@ library AuctionSettlement
         view
         returns (uint[] memory bips)
     {
-      uint size = s.users.length;
-      uint total;
-      bips = new uint[](size);
+          uint size = s.users.length;
+          uint total = 10000; // give it a minimum value
+          bips = new uint[](size);
 
-      uint i;
-      for (i = 0; i < size; i++) {
-          IAuctionData.Account storage a = s.accounts[s.users[i]];
+          uint i;
+          for (i = 0; i < size; i++) {
+              IAuctionData.Account storage a = s.accounts[s.users[i]];
 
-          bips[i] = (a.bidRebateWeight / s.bidAmount)
-              .add(a.askRebateWeight / s.askAmount);
+              bips[i] = (a.bidRebateWeight / s.bidAmount)
+                  .add(a.askRebateWeight / s.askAmount);
 
-          total = total.add(bips[i]);
-      }
+              total = total.add(bips[i]);
+          }
 
-      total /= 10000;
-      assert(total > 0);
+          total /= 10000;
+          assert(total > 0);
 
-      for (i = 0; i < size; i++) {
-          bips[i] /= total;
-      }
+          for (i = 0; i < size; i++) {
+              bips[i] /= total;
+          }
     }
 
     function payUser(

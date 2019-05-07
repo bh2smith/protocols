@@ -27,6 +27,8 @@ library AuctionAccount
 {
     using MathUint  for uint;
 
+    uint public constant MAX_USERS = 1000;
+
     function depositToken(
         IAuctionData.State storage s,
         address token,
@@ -48,5 +50,16 @@ library AuctionAccount
             s.oedax.depositToken(token, msg.sender, _amount),
             "token transfer failed"
         );
+    }
+
+    function logParticipant(
+        IAuctionData.State storage s
+        )
+        internal
+    {
+        if (s.oedax.logParticipant(msg.sender)) {
+            require(s.users.length <= MAX_USERS, "too many users");
+            s.users.push(msg.sender);
+        }
     }
 }
